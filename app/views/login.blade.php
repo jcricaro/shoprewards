@@ -9,7 +9,7 @@
 			<span class="red">Shop Rewards</span>
 			<span class="white">Application</span>
 		</h1>
-		<h4 class="blue">&copy; JC Ricaro</h4>
+		<!-- <h4 class="blue">&copy; JC Ricaro</h4> -->
 	</div>
 	<div class="space-6"></div>
 	<div class="position-relative">

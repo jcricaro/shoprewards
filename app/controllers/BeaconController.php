@@ -36,12 +36,12 @@ class BeaconController extends \BaseController {
 	public function store()
 	{
 		$beacon = new Beacon;
-		$beacon->title = Input::get('title');
-		$beacon->uuid = Input::get('uuid');
-		$beacon->major = Input::get('major');
-		$beacon->minor = Input::get('minor');
-		$beacon->store_id = Input::get('store_id');
-		$beacon->description = Input::get('description');
+		$beacon->title 			= Input::get('title');
+		$beacon->uuid 			= Input::get('uuid');
+		$beacon->major 			= Input::get('major');
+		$beacon->minor 			= Input::get('minor');
+		$beacon->store_id 		= Input::get('store_id');
+		$beacon->description 	= Input::get('description');
 
 		if(!$beacon->save()) {
 			return Redirect::to('beacon/create')
@@ -77,12 +77,12 @@ class BeaconController extends \BaseController {
 	public function update($id)
 	{
 		$beacon = Beacon::find($id);
-		$beacon->title = Input::get('title');
-		$beacon->uuid = Input::get('uuid');
-		$beacon->major = Input::get('major');
-		$beacon->minor = Input::get('minor');
-		$beacon->store_id = Input::get('store_id');
-		$beacon->description = Input::get('description');
+		$beacon->title 			= Input::get('title');
+		$beacon->uuid 			= Input::get('uuid');
+		$beacon->major 			= Input::get('major');
+		$beacon->minor 			= Input::get('minor');
+		$beacon->store_id 		= Input::get('store_id');
+		$beacon->description 	= Input::get('description');
 
 		if($beacon->save()) {
 			Session::flash('info', 'Beacon updated.');

@@ -13,7 +13,7 @@ class ActionController extends \BaseController {
 	{
 		$this->layout->content = View::make('actions.home')
 			->with('title', 'Actions')
-			->with('data', User::find(Sentry::getUser()->id)->actions;
+			->with('data', User::find(Sentry::getUser()->id)->actions);
 	}
 
 	/**
@@ -23,7 +23,9 @@ class ActionController extends \BaseController {
 	 */
 	public function create()
 	{
-		$this->layout->content = View::make('actions.add')->with('title', 'Add Action');
+		$this->layout->content = View::make('actions.add')
+			->with('title', 'Add Action')
+			->with('stores', User::find(Sentry::getUser()->id)->stores);
 	}
 
 	/**
@@ -44,7 +46,8 @@ class ActionController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$this->layout->content = View::make('actions.edit')->with('title', 'Edit Action');
+		$this->layout->content = View::make('actions.edit')
+			->with('title', 'Edit Action');
 	}
 
 	/**

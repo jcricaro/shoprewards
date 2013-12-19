@@ -3,8 +3,18 @@
 class Seed extends Seeder {
 	
 	public function run() {
-		DB::table('products')->delete();
+		DB::table('stores')->delete();
 
+		
+		Store::create(array(
+			'id'			=> 1,
+			'user_id' 		=> 1,
+			'title' 		=> 'Store 101',
+			'description' 	=> 'I am a description',
+			'address' 		=> '101 street, Makati QC'
+			));
+
+		DB::table('products')->delete();
 
 		Product::create(array(
 			'store_id' => 1,
@@ -52,15 +62,6 @@ class Seed extends Seeder {
 
 		Sentry::findUserById(1)->addGroup(Sentry::findGroupById(3));
 
-		DB::table('stores')->delete();
-		$store = Store::create(array(
-			'id'			=> 1,
-			'user_id' 		=> $user->id,
-			'title' 		=> 'Store 101',
-			'description' 	=> 'I am a description',
-			'address' 		=> '101 street, Makati QC'
-			));
-
 		$code = $user->getActivationCode();
 		$user = Sentry::findUserById($user->id);
 		$user->attemptActivation($code);
@@ -71,7 +72,7 @@ class Seed extends Seeder {
 			'uuid' => '1234567894563',
 			'major' => '123456',
 			'minor' => '123456',
-			'store_id' => $store->id,
+			'store_id' => 1,
 			'title' => 'Entrance'
 			));
 
@@ -79,7 +80,7 @@ class Seed extends Seeder {
 			'uuid' => '1234567894563',
 			'major' => '123456',
 			'minor' => '123456',
-			'store_id' => $store->id,
+			'store_id' => 1,
 			'title' => 'Pants'
 			));
 
@@ -87,7 +88,7 @@ class Seed extends Seeder {
 			'uuid' => '1234567894563',
 			'major' => '123456',
 			'minor' => '123456',
-			'store_id' => $store->id,
+			'store_id' => 1,
 			'title' => 'Jackets'
 			));
 
@@ -96,25 +97,25 @@ class Seed extends Seeder {
 		Reward::create(array(
 			'title' => 'Reward 1',
 			'value' => 500,
-			'store_id' => $store->id
+			'store_id' => 1
 			));
 
 		Reward::create(array(
 			'title' => 'Reward 2',
 			'value' => 234,
-			'store_id' => $store->id
+			'store_id' => 1
 			));
 
 		Reward::create(array(
 			'title' => 'Reward 3',
 			'value' => 12,
-			'store_id' => $store->id
+			'store_id' => 1
 			));
 
 		Reward::create(array(
 			'title' => 'Reward 4',
 			'value' => 50,
-			'store_id' => $store->id
+			'store_id' => 1
 			));
 	}
 }

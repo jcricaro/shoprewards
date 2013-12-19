@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-header">
-			List of your Actions
+			List of Rewards
 		</div>
 		@if($data)
 		<div class="table-responsive">
