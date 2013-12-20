@@ -13,7 +13,7 @@ class Store extends Eloquent {
 		return $this->hasMany('Beacon');
 	}
 
-	public function store() {
+	public function user() {
 		return $this->belongsTo('User');
 	}	
 }
