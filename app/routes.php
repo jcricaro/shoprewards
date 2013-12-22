@@ -27,6 +27,13 @@ Route::group(array('before' => 'auth'), function() {
 	Route::controller('analytics', 'AnalyticController');
 });
 
+
+
+Route::group(array('before' => 'api'), function() {
+	Route::controller('api/v1', 'ApiController');	
+});
+
+
 Route::controller('login', 'LoginController');
 
 Route::get('logout', array('before' => 'auth', function() {

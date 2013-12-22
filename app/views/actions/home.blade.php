@@ -18,8 +18,10 @@
 			<table id="table" class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
+						<th>Store</th>
 						<th>Name</th>
-						<th>Type</th>
+						<th>Action</th>
+						<th>Beacon/Product</th>
 						<th>Hits</th>
 						<th class="hidden-480">Active</th>
 						<th></th>
@@ -29,8 +31,10 @@
 
 					@foreach($data as $row)
 					<tr>
+						<td>{{ $row->store->title }}</td>
 						<td>{{ $row->title }}</td>
 						<td>{{ $row->actionType->text }}</td>
+						<td>{{ $row->trigger->title }}</td>
 						<td>{{ $row->hits }}</td>
 						<td>Active</td>
 						<td>
@@ -89,7 +93,7 @@
 	jQuery(function($) {
 		var oTable1 = $('#table').dataTable({
 			"aoColumns": [
-			null,null, null, null,
+			null,null,null,null, null, null,
 			{
 				"bSortable": false
 			}

@@ -8,6 +8,12 @@
 		"cartalyst/sentry": "2.0.*",
 		"laravelbook/ardent": "dev-master"
 	},
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.cartalyst.com"
+        }
+    ],
 	"autoload": {
 		"classmap": [
 			"app/commands",

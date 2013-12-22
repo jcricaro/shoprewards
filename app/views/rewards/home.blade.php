@@ -5,6 +5,10 @@
 	</h1>
 </div>
 
+<p class="pull-right">
+<a href={{ url('reward/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add Reward</a>
+</p>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-header">
@@ -74,10 +78,6 @@
 		@endif
 	</div>
 </div>
-
-<div class="space-4"></div>
-
-<a href={{ url('reward/create'); }} class="btn btn-primary pull-right"><i class="icon icon-plus"></i> Add Reward</a>
 @stop
 
 

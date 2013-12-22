@@ -5,6 +5,10 @@
 	</h1>
 </div>
 
+<p class="pull-right">
+<a href={{ url('product/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add Product</a>
+</p>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-header">
@@ -72,11 +76,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="space-4"></div>
-
-<a href={{ url('product/create'); }} class="btn btn-primary pull-right"><i class="icon icon-plus"></i> Add Product</a>
-
 @stop
 
 @section('scripts')

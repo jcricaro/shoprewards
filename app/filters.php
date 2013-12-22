@@ -38,6 +38,29 @@ Route::filter('auth', function()
 	if (!Sentry::check()) return View::make('login');
 });
 
+Route::filter('api', function() {
+	try
+	{
+	    // Set login credentials
+	    $credentials = array(
+	        'email'    => Input::get('email', 'jc'),
+	        'password' => Input::get('password', 'pogi')
+	        // 'email' => 'admin@email.com',
+	        // 'password' => 123456
+	    );
+
+	    $user = Sentry::authenticate($credentials, false);
+	}
+	catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
+	{
+    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'));
+	}
+	catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+	{
+    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'));
+	}
+});
+
 
 Route::filter('auth.basic', function()
 {
