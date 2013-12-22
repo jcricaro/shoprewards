@@ -22,7 +22,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="store">Store</label>
 				<div class="col-sm-9">
-					<select name="store_id" class="select2" value="{{ Input::old('store_id') }}">
+					<select name="store_id" class="select2 input-medium" value="{{ Input::old('store_id') }}" id="store">
 						<option></option>
 						@foreach($stores as $store)
 						<option value="{{ $store->id }}">{{ $store->title }}</option>
@@ -30,26 +30,6 @@
 					</select>
 				</div>
 			</div>
-
-			<div class="space-4"></div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label no-padding-right" for="type">Action type</label>
-				<div class="col-sm-9">
-					<select name="action" id="type" value="{{ Input::old('action') }}">
-						<option value="1">Walk In</option>
-						<option value="2">Enter Region</option>
-						<option value="3">Exit Region</option>
-
-						<option value="4">Scan</option>
-						<option value="5">Favorite</option>
-
-						<option value="6">Buy</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="space-4"></div>
 
 			<div class="space-4"></div>
 
@@ -63,38 +43,45 @@
 			<div class="space-4"></div>
 
 			<div class="form-group">
-				<label class="col-sm-3 control-label no-padding-right" for="uuid">UUID</label>
-				<div class="col-sm-5">
-					<input type="text" placeholder="UUID" id="uuid" class="col-xs-10 col-sm-5" name="uuid" value="{{ Input::old('uuid') }}" />
-				</div>
-			</div>
-
-			<div class="space-4"></div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label no-padding-right" for="major">Major</label>
-				<div class="col-sm-5">
-					<input type="text" placeholder="Major" id="placeholder" class="col-xs-10 col-sm-5" name="major" value="{{ Input::old('major') }}" />
-				</div>
-			</div>
-
-			<div class="space-4"></div>
-
-			<div class="form-group">
-				<label class="col-sm-3 control-label no-padding-right" for="minor">Minor</label>
-				<div class="col-sm-5">
-					<input type="text" placeholder="Minor" id="minor" class="col-xs-10 col-sm-5" name="minor" value="{{ Input::old('minor') }}" />
-				</div>
-			</div>
-
-			<div class="space-4"></div>
-
-
-
-			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="description">Description</label>
 				<div class="col-sm-9">
-					<textarea name="description" id="description" class="col-xs-10 col-sm-5">{{ Input::old('description') }}</textarea>
+					<textarea placeholder="Description" name="description" id="description" class="col-xs-10 col-sm-5">{{ Input::old('description') }}</textarea>
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="trigger_id">Trigger</label>
+				<div class="col-sm-9">
+					<div class="radio">
+						<label>
+							<input type="radio" class="ace col-md-2" name="trigger" id="radio_product" value="p">
+							<span class="lbl"> Product &nbsp;
+								<select disabled id="product" class="input-medium">
+								</select>
+							</span>
+						</label>
+					</div>
+					<div class="radio">
+						<label>
+							<input type="radio" class="ace" name="trigger" id="radio_beacon" value="b">
+							<span class="lbl"> Beacon &nbsp;&nbsp;
+								<select disabled id="beacon" class="input-medium">
+								</select>
+							</span>
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="type">Action type</label>
+				<div class="col-sm-9">
+					<select name="action" class="input-medium" id="type" value="{{ Input::old('action') }}">
+					</select>
 				</div>
 			</div>
 
@@ -120,6 +107,42 @@
 {{ HTML::script('assets/js/jquery.validate.min.js') }}
 
 <script type="text/javascript">
-	
+	jQuery(function($) {
+
+		$("#radio_product").change(function(e) {
+			$("#product").removeAttr('disabled');
+			$("#product").attr('name', 'trigger_id');
+
+			$("#beacon").attr('disabled', true);
+			$("#beacon").removeAttr('name');
+
+
+			$("#type").html('<option value="4">Scan</option><option value="5">Favorite</option><option value="6">Buy</option>');
+			
+		});
+
+		$("#radio_beacon").change(function(e) {
+			$("#beacon").removeAttr('disabled');
+			$("#beacon").attr('name', 'trigger_id');
+
+			$("#product").attr('disabled', true);
+			$("#product").removeAttr('name');
+
+			$("#type").html('<option value="1">Walk In</option><option value="2">Enter Region</option><option value="3">Exit Region</option>');
+		});
+
+		$("#store").change(function() {
+			var post = {
+				store_id : $(this).val()
+			}
+			$.post("{{ url('store/products') }}", post, function(data) {
+				$("#product").html(data.html);
+			}, 'json');
+
+			$.post("{{ url('store/beacons') }}", post, function(data) {
+				$("#beacon").html(data.html);
+			});
+		});
+	});
 </script>
 @stop

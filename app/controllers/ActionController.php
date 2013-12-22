@@ -35,7 +35,26 @@ class ActionController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$action = new Action;
+
+		$action->store_id 			= Input::get('store_id');
+		$action->title 				= Input::get('title');
+		$action->description 		= Input::get('description');
+		$action->trigger 			= Input::get('trigger');
+		$action->trigger_id 		= Input::get('trigger_id');
+		$action->type 				= Input::get('action');
+
+
+		if(!$action->save()) {
+			return Redirect::to('action/create')
+				->withInput()
+				->with('error', $action->errors()->all());
+
+		}
+		else {
+			return Redirect::to('action')
+				->with('info', 'Action has been added');
+		}
 	}
 
 	/**

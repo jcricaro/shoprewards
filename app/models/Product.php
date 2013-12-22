@@ -1,7 +1,7 @@
 <?php
 use LaravelBook\Ardent\Ardent;
 
-class Product extends Eloquent {
+class Product extends Ardent {
 
 	public static $rules = array(
 		'title'		=> 'required',

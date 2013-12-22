@@ -26,10 +26,11 @@
 					</tr>
 				</thead>
 				<tbody>
+
 					@foreach($data as $row)
 					<tr>
 						<td>{{ $row->title }}</td>
-						<td>{{ $row->type }}</td>
+						<td>{{ $row->actionType->text }}</td>
 						<td>{{ $row->hits }}</td>
 						<td>Active</td>
 						<td>

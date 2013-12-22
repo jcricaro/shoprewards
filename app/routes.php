@@ -13,8 +13,10 @@
 
 Route::get('/', array('before' => 'auth', 'uses' => 'DashboardController@getIndex'));
 
-
 Route::group(array('before' => 'auth'), function() {
+	Route::post('store/products', 'StoreController@products');
+	Route::post('store/beacons', 'StoreController@beacons');
+
 	Route::controller('dashboard', 'DashboardController');
 	Route::resource('store', 'StoreController');
 	Route::resource('action', 'ActionController');

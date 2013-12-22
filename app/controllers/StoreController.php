@@ -72,4 +72,26 @@ class StoreController extends \BaseController {
 		//
 	}
 
+	public function products() {
+		$id = Input::get('store_id');
+		$products = Product::where('store_id', $id)->get();
+		$html = "";
+		foreach($products as $product) {
+			$html .= "<option value=".$product->id.">".$product->title."</option>";
+		}
+
+		return Response::json(array('html' => $html));
+	}
+
+	public function beacons() {
+		$id = Input::get('store_id');
+		$beacons = Beacon::where('store_id', $id)->get();
+		$html = "";
+		foreach($beacons as $beacon) {
+			$html .= "<option value=".$beacon->id.">".$beacon->title."</option>";
+		}
+
+		return Response::json(array('html' => $html));
+	}
+
 }
