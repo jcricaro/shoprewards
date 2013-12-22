@@ -40,7 +40,6 @@ class ActionController extends \BaseController {
 		$action->store_id 			= Input::get('store_id');
 		$action->title 				= Input::get('title');
 		$action->description 		= Input::get('description');
-		$action->trigger 			= Input::get('trigger');
 		$action->trigger_id 		= Input::get('trigger_id');
 		$action->type 				= Input::get('action');
 

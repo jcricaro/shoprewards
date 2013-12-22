@@ -7,7 +7,6 @@ class Action extends Ardent {
 	public static $rules = array(
 		'title'			=> 'required',
 		'store_id'		=> 'required',
-		'trigger'		=> 'required',
 		'trigger_id'	=> 'required',
 		'type'			=> 'required'
 		);
