@@ -26,28 +26,28 @@ class Seed extends Seeder {
 		Product::create(array(
 			'store_id' => 1,
 			'title' => 'Test',
-			'ean' => '123456',
+			'ean' => '123455',
 			'price' => '25',
 			'description' => 'I am a description'
 			));
 		Product::create(array(
 			'store_id' => 1,
 			'title' => 'Test',
-			'ean' => '123456',
+			'ean' => '123454',
 			'price' => '25',
 			'description' => 'I am a description'
 			));
 		Product::create(array(
 			'store_id' => 1,
 			'title' => 'Test',
-			'ean' => '123456',
+			'ean' => '123453',
 			'price' => '25',
 			'description' => 'I am a description'
 			));
 		Product::create(array(
 			'store_id' => 1,
 			'title' => 'Test',
-			'ean' => '123456',
+			'ean' => '123452',
 			'price' => '25',
 			'description' => 'I am a description'
 			));

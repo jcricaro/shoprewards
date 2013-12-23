@@ -9,7 +9,11 @@ class ApiController extends BaseController {
 	function actionNotFound() {
 		exit(Response::json(array('status' => false, 'message' => 'Action not available'), 200));
 	}
-	
+
+	function productNotFound() {
+		exit(Response::json(array('status' => false, 'message' => 'Product not available'), 200));
+	}
+
 	function checkAction($type, $trigger) {
 		$action = Action::where('type', $type)->where('trigger_id', $trigger)->first();
 		if($action)
@@ -22,6 +26,13 @@ class ApiController extends BaseController {
 		if($beacon)
 			return $beacon;	
 		$this->beaconNotFound();
+	}
+
+	function checkProduct($ean) {
+		$product = Product::where('ean', $ean)->first();
+		if($product)
+			return $product;
+		$this->productNotFound();
 	}
 
 	public function postBeacons() {
@@ -60,9 +71,56 @@ class ApiController extends BaseController {
 		$response = array(
 			'beacon' => $beacon->title,
 			'message_title' => 'Hi',
-			'message_text' => 'Welcome to our store. You just earned '.$action->value.' Points',
-			'message_value' => '100'
+			'message_text' => 'Welcome to our store. You just earned {0} Points',
+			'message_value' => $action->value
 			);
+		return Response::json($response, 200);
+	}
+
+	public function postProducts() {
+		$action = Input::get('action', null);
+		$ean = Input::get('ean', null);
+		$timestamp = Input::get('timestamp', null);
+
+		$product = $this->checkProduct($ean);
+
+
+		switch ($action) {
+			case 'scan':
+				$action = $this->checkAction(4, $product->id);
+				$response = array(
+					'message_type' => 1,
+					'message_title' => 'Hi '.Session::get('first_name'),
+					'message_text' => 'Scan of {0} just earned you {1} Points',
+					'message_value' => array($product->title, $action->value)
+					);
+				break;
+			case 'fav':
+				$action = $this->checkAction(5, $product->id);
+				$response = array(
+					'message_type' => 2,
+					'message_title' => 'Hi '.Session::get('first_name'),
+					'message_text' => 'You earned {1} points by favorising {0}',
+					'message_value' => array($product->title, $action->value)
+					);
+				break;
+			case 'buy':
+				$action = $this->checkAction(6, $product->id);
+				$response = array(
+					'message_type' => 4,
+					'message_title' => 'Hi '.Session::get('first_name'),
+					'message_text' => 'Thanks for buying {0}. It earned you {1} Points',
+					'message_value' => array($product->title, $action->value)
+					);
+				break;
+			case 'list':
+
+				break;
+			default:
+				
+				break;
+		}
+
 		return Response::json($response, 200);
 	}
 }
