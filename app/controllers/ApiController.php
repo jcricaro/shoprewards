@@ -14,6 +14,10 @@ class ApiController extends BaseController {
 		exit(Response::json(array('status' => false, 'message' => 'Product not available'), 200));
 	}
 
+	function rewardNotFound() {
+		exit(Response::json(array('status' => false, 'message' => 'Reward not available'), 200));
+	}
+
 	function checkAction($type, $trigger) {
 		$action = Action::where('type', $type)->where('trigger_id', $trigger)->first();
 		if($action)
@@ -33,6 +37,13 @@ class ApiController extends BaseController {
 		if($product)
 			return $product;
 		$this->productNotFound();
+	}
+
+	function checkReward($reward_id) {
+		$reward = Reward::find($reward_id);
+		if($reward)
+			return $reward;
+		$this->rewardNotFound();
 	}
 
 	public function postBeacons() {
@@ -115,6 +126,50 @@ class ApiController extends BaseController {
 				break;
 			case 'list':
 
+				break;
+			default:
+				
+				break;
+		}
+
+		return Response::json($response, 200);
+	}
+
+	public function postRewards() {
+		$action = Input::get('action', null);
+
+		switch ($action) {
+			case 'redeem':
+
+				$reward = $this->checkReward(Input::get('reward_id', null));
+
+				if(User::find(Session::get('user_id'))->getCurrentPoints() >= Reward::find($reward->id)->value) {
+					//okay the user can actually afford this shit
+					$redeem = new Redeem;
+					$redeem->user_id = Session::get('user_id');
+					$redeem->reward_id = $reward->id;
+					$redeem->value = $reward->value;
+
+					if($redeem->save()) {
+						$response = array(
+							'message_type' => 5,
+							'redemption_id' => $redeem->id,
+							'qr_image' => 'hurdur'
+							);
+					}
+				}
+				else {
+					$response = array(
+						'status'	=> false,
+						'message'	=> 'Not enough points'
+						);
+				}
+
+				$redeem = new Redeem;
+
+
+				break;
+			case 'list':
 				break;
 			default:
 				

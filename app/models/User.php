@@ -49,6 +49,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function getCurrentPoints() {
+		return Point::where('user_id', $this->id)->sum('value') - Redeem::where('user_id', $this->id)->sum('value');
+	}
+
 	public function actions() {
 		return $this->hasManyThrough('Action', 'Store');
 	}
