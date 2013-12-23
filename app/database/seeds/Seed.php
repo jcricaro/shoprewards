@@ -69,7 +69,7 @@ class Seed extends Seeder {
 		DB::table('beacons')->delete();
 
 		Beacon::create(array(
-			'uuid' => '1234567894563',
+			'uuid' => 'uuid1',
 			'major' => '123456',
 			'minor' => '123456',
 			'store_id' => 1,
@@ -77,7 +77,7 @@ class Seed extends Seeder {
 			));
 
 		Beacon::create(array(
-			'uuid' => '1234567894563',
+			'uuid' => 'uuid2',
 			'major' => '123456',
 			'minor' => '123456',
 			'store_id' => 1,
@@ -85,7 +85,7 @@ class Seed extends Seeder {
 			));
 
 		Beacon::create(array(
-			'uuid' => '1234567894563',
+			'uuid' => 'uuid3',
 			'major' => '123456',
 			'minor' => '123456',
 			'store_id' => 1,

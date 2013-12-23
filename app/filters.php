@@ -41,23 +41,25 @@ Route::filter('auth', function()
 Route::filter('api', function() {
 	try
 	{
-	    // Set login credentials
-	    $credentials = array(
-	        'email'    => Input::get('email', 'jc'),
-	        'password' => Input::get('password', 'pogi')
-	        // 'email' => 'admin@email.com',
-	        // 'password' => 123456
-	    );
+	    $user = Sentry::authenticate(array(
+	    	'email' => Request::getUser(),
+	    	'password' => Request::getPassword()
+	    	), false);
 
-	    $user = Sentry::authenticate($credentials, false);
+
+	    Session::put('user_id', $user->id);
+	    Session::put('email', $user->email);
+	    Session::put('first_name', $user->first_name);
+	    Session::put('last_name', $user->last_name);
+
 	}
 	catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
 	{
-    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'));
+    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'), 401);
 	}
 	catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
 	{
-    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'));
+    	return Response::json(array('status' => false, 'message' => 'Wrong user credentials.'), 401);
 	}
 });
 

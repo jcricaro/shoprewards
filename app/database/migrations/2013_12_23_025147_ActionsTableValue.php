@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class RemoveTriggersColumn extends Migration {
+class ActionsTableValue extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class RemoveTriggersColumn extends Migration {
 	public function up()
 	{
 		Schema::table('actions', function($table) {
-			$table->dropColumn('trigger');
+			$table->integer('value')->after('description');
 		});
 	}
 
@@ -24,7 +24,7 @@ class RemoveTriggersColumn extends Migration {
 	public function down()
 	{
 		Schema::table('actions', function($table) {
-			$table->string('trigger')->after('store_id');
+			$table->dropColumn('value');
 		});
 	}
 
