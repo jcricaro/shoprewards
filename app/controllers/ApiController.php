@@ -164,10 +164,6 @@ class ApiController extends BaseController {
 						'message'	=> 'Not enough points'
 						);
 				}
-
-				$redeem = new Redeem;
-
-
 				break;
 			case 'list':
 				break;
