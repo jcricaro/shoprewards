@@ -16,7 +16,7 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-xs-6 widget-container-span">
 		<form class="form-horizontal" role="form" id="validation-form">
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="title">Title</label>
@@ -69,53 +69,101 @@
 			</div>
 		</form>
 	</div>
+	<div class="col-xs-6 widget-container-span">
+		<div class="widget-box">
+			<div class="widget-header">
+				<h5>Yolo Please</h5>
+				<div class="widget-toolbar">
+					<a href="#" data-action="collapse">
+						<i class="icon-chevron-up"></i>
+					</a>
+
+					<a href="#" data-action="close">
+						<i class="icon-remove"></i>
+					</a>
+				</div>
+			</div>
+			<div class="widget-body">
+				<div class="widget-main">
+					<div id="dropzone">
+						<form action="//dummy.html" class="dropzone">
+							<div class="fallback">
+								<input name="file" type="file" multiple="" />
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 			
 @stop
 
 @section('scripts')
 
-{{ HTML::script('assets/js/jquery.validate.min.js'); }}
-
+{{ HTML::script('assets/js/jquery.validate.min.js') }}
+{{ HTML::script('assets/js/dropzone.min.js') }}
 
 <script type="text/javascript">
+	jQuery(function($) {
+		try {
+			$(".dropzone").dropzone({
+				paramName: "file", // The name that will be used to transfer the file
+				maxFilesize: 0.5, // MB
 
-	$("#validation-form").validate({
-		errorElement: 'div',
-		errorClass: 'help-block',
-		focusInvalid: false,
-		invalidHandler: function (event, validator) { //display error alert on form submit   
-			$('.alert-danger', $('#validate-form')).show();
-		},
-		highlight: function (e) {
-			$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-		},
-		rules: {
-			title: {
-				required: true
-			},
-			ean: {
-				required: true
-			},
-			price: {
-				required: true,
-				number: true
-			}
-		},
-		submitHandler: function (form) {
-			$.ajax({
-				url: "{{ url('product/'.$data->id) }}",
-				type: 'PUT',
-				data: $("#validation-form").serialize(),
-				dataType: 'json',
-				success: function(data) {
-					if(data.status) {
-						window.location = "{{ url('product') }}";
-					}
-				}
+				addRemoveLinks : true,
+				dictDefaultMessage :
+				'<span class="bigger-150 bolder"><i class="icon-caret-right red"></i> Drop files</span> to upload \
+				<span class="smaller-80 grey">(or click)</span> <br /> \
+				<i class="upload-icon icon-cloud-upload blue icon-3x"></i>'
+				,
+				dictResponseError: 'Error while uploading file!',
+
+				//change the previewTemplate to use Bootstrap progress bars
+				previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-details\">\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n    <div class=\"dz-size\" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class=\"progress progress-small progress-striped active\"><div class=\"progress-bar progress-bar-success\" data-dz-uploadprogress></div></div>\n  <div class=\"dz-success-mark\"><span></span></div>\n  <div class=\"dz-error-mark\"><span></span></div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>"
 			});
+			} catch(e) {
+				alert('Dropzone.js does not support older browsers!');
 		}
 
+		$("#validation-form").validate({
+			errorElement: 'div',
+			errorClass: 'help-block',
+			focusInvalid: false,
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#validate-form')).show();
+			},
+			highlight: function (e) {
+				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+			},
+			rules: {
+				title: {
+					required: true
+				},
+				ean: {
+					required: true
+				},
+				price: {
+					required: true,
+					number: true
+				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: "{{ url('product/'.$data->id) }}",
+					type: 'PUT',
+					data: $("#validation-form").serialize(),
+					dataType: 'json',
+					success: function(data) {
+						if(data.status) {
+							window.location = "{{ url('product') }}";
+						}
+					}
+				});
+			}
+
+		});
 	});
 </script>
 @stop

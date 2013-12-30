@@ -46,6 +46,11 @@ class ApiController extends BaseController {
 		$this->rewardNotFound();
 	}
 
+	public function getBeacons() {
+		$response = array('status' => false);
+		return Response::json($response);
+	}
+
 	public function postBeacons() {
 		$uuid = Input::get('uuid', NULL);
 		$major = Input::get('major', NULL);
@@ -80,8 +85,8 @@ class ApiController extends BaseController {
 
 
 		$response = array(
-			'beacon' => $beacon->title,
-			'message_title' => 'Hi',
+			'message_type' => 0,
+			'message_title' => 'Hi '.Session::get('first_name'),
 			'message_text' => 'Welcome to our store. You just earned {0} Points',
 			'message_value' => $action->value
 			);
