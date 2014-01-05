@@ -17,6 +17,8 @@ Route::group(array('before' => 'auth'), function() {
 	Route::post('store/products', 'StoreController@products');
 	Route::post('store/beacons', 'StoreController@beacons');
 
+	Route::any('upload/product/{id}', array('uses' => 'UploadController@product'));
+
 	Route::controller('dashboard', 'DashboardController');
 	Route::resource('store', 'StoreController');
 	Route::resource('action', 'ActionController');

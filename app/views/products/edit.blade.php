@@ -9,6 +9,7 @@
 @stop
 
 @section('content')
+
 <div class="page-header">
 	<h1>
 		{{ $title }}
@@ -16,7 +17,7 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-6 widget-container-span">
+	<div class="col-xs-8 widget-container-span">
 		<form class="form-horizontal" role="form" id="validation-form">
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="title">Title</label>
@@ -69,10 +70,10 @@
 			</div>
 		</form>
 	</div>
-	<div class="col-xs-6 widget-container-span">
+	<div class="col-xs-4 widget-container-span">
 		<div class="widget-box">
 			<div class="widget-header">
-				<h5>Yolo Please</h5>
+				<h5>Photos</h5>
 				<div class="widget-toolbar">
 					<a href="#" data-action="collapse">
 						<i class="icon-chevron-up"></i>
@@ -83,20 +84,62 @@
 					</a>
 				</div>
 			</div>
+
 			<div class="widget-body">
 				<div class="widget-main">
+
+
 					<div id="dropzone">
-						<form action="//dummy.html" class="dropzone">
+						<form action="{{ url('upload/product/'. $data->id) }}" class="dropzone">
 							<div class="fallback">
 								<input name="file" type="file" multiple="" />
 							</div>
 						</form>
 					</div>
+
+					<div class="space-6"></div>
+
+					<ul class="ace-thumbnails">
+						@foreach($data->getPhotos as $image)
+						<li>
+							<a href="{{ $image->getPath() }}" title="Photo Title" data-rel="colorbox">
+								<img alt="150x150" src="{{ $image->getThumbnail() }}" />
+								<div class="tags">
+									<span class="label-holder">
+										<span class="label label-info arrowed-in">Main</span>
+									</span>
+								</div>
+							</a>
+
+							<div class="tools">
+								<a href="#">
+									<i class="icon-link"></i>
+								</a>
+
+								<a href="#">
+									<i class="icon-paper-clip"></i>
+								</a>
+
+								<a href="#">
+									<i class="icon-pencil"></i>
+								</a>
+
+								<a href="#">
+									<i class="icon-remove red"></i>
+								</a>
+							</div>
+						</li>
+						@endforeach
+					</ul>
+					
+					<div class="clearfix"></div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
 			
 @stop
 
@@ -104,9 +147,34 @@
 
 {{ HTML::script('assets/js/jquery.validate.min.js') }}
 {{ HTML::script('assets/js/dropzone.min.js') }}
+{{ HTML::script('assets/js/jquery.colorbox-min.js') }}
 
 <script type="text/javascript">
 	jQuery(function($) {
+
+		var colorbox_params = {
+			reposition:true,
+			scalePhotos:true,
+			scrolling:false,
+			previous:'<i class="icon-arrow-left"></i>',
+			next:'<i class="icon-arrow-right"></i>',
+			close:'&times;',
+			current:'{current} of {total}',
+			maxWidth:'100%',
+			maxHeight:'100%',
+			onOpen:function(){
+				document.body.style.overflow = 'hidden';
+			},
+			onClosed:function(){
+				document.body.style.overflow = 'auto';
+			},
+			onComplete:function(){
+				$.colorbox.resize();
+			}
+		};
+
+		$('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+
 		try {
 			$(".dropzone").dropzone({
 				paramName: "file", // The name that will be used to transfer the file

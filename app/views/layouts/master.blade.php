@@ -9,6 +9,7 @@
 	{{ HTML::style('assets/css/bootstrap.min.css') }}
 	{{ HTML::style('assets/css/font-awesome.min.css') }}
 	{{ HTML::style('assets/css/dropzone.css') }}
+	{{ HTML::style('assets/css/colorbox.css') }}
 	
 	<!--[if IE 7]>
 	{{ HTML::style('assets/css/font-awesome-ie7.min.css') }}

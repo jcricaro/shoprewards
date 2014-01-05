@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPointsTable extends Migration {
+class CreatePhotosTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,11 +11,10 @@ class CreateUserPointsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('user_points', function($table) {
+		Schema::create('product_photos', function($table) {
 			$table->increments('id');
-			$table->integer('user_id');
-			$table->integer('action_id');
-			$table->integer('value');
+			$table->integer('product_id');
+			$table->string('filename');
 			$table->timestamps();
 		});
 	}
@@ -27,7 +26,7 @@ class CreateUserPointsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('user_points');
+		Schema::drop('product_photos');
 	}
 
 }

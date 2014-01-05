@@ -12,4 +12,8 @@ class Product extends Ardent {
 	public function store()	{
 		return $this->belongsTo('Store');
 	}
+
+	public function getPhotos() {
+		return $this->hasMany('ProductPhoto');
+	}
 }
