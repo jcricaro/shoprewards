@@ -27,4 +27,8 @@ class Action extends Ardent {
 			return $this->belongsTo('Product');
 		}
 	}
+
+	public function points() {
+		return $this->hasMany('Point');
+	}
 }
