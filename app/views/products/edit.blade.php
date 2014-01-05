@@ -113,18 +113,9 @@
 
 							<div class="tools">
 								<a href="#">
-									<i class="icon-link"></i>
-								</a>
-
-								<a href="#">
 									<i class="icon-paper-clip"></i>
 								</a>
-
-								<a href="#">
-									<i class="icon-pencil"></i>
-								</a>
-
-								<a href="#">
+								<a href="#" class="delete" data-id="{{ $image->id }}">
 									<i class="icon-remove red"></i>
 								</a>
 							</div>
@@ -148,9 +139,30 @@
 {{ HTML::script('assets/js/jquery.validate.min.js') }}
 {{ HTML::script('assets/js/dropzone.min.js') }}
 {{ HTML::script('assets/js/jquery.colorbox-min.js') }}
+{{ HTML::script('assets/js/bootbox.min.js') }}
 
 <script type="text/javascript">
 	jQuery(function($) {
+
+		$(".delete").on("click", function() {
+			var self = this;
+			bootbox.confirm("Are you sure?", function(result) {
+				if(result) {
+					$.ajax({
+						url: "{{ url('delete/product') }}" + "/" + $(self).data('id'),
+						type : 'GET',
+						success: function(data) {
+							if(data.status) {
+								location.reload();
+							}
+						},
+						dataType: 'json'
+					});
+				}
+			});
+			return false;
+		});
+
 
 		var colorbox_params = {
 			reposition:true,

@@ -20,4 +20,25 @@ class UploadController extends BaseController {
 		    $o->save();
  		}
 	}
+
+	public function deleteproduct($id) {
+		$photo = ProductPhoto::find($id);
+
+		File::delete(public_path('uploads/original/'.  $photo->filename));
+		File::delete(public_path('uploads/regular/' . $photo->filename));
+		File::delete(public_path('uploads/thumbnail/' . $photo->filename));
+
+		if($photo->delete()) {
+			return Response::json(array('status' => true));
+		}
+		return Response::json(array('status' => false));
+	}
+
+	public function reward($id) {
+
+	}
+
+	public function deletereward($id) {
+		
+	}
 }
