@@ -53,6 +53,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return Point::where('user_id', $this->id)->sum('value') - Redeem::where('user_id', $this->id)->sum('value');
 	}
 
+	public function getStoreTotal() {
+		return $this->storePoints()->sum('value') - $this->storeRedeems()->sum('value');
+	}
+
 	public function actions() {
 		return $this->hasManyThrough('Action', 'Store');
 	}
@@ -72,5 +76,14 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	public function products() {
 		return $this->hasManyThrough('Product', 'Store');	
 	}
+
+	public function storePoints() {
+		return $this->hasManyThrough('StorePoint', 'Store');
+	}
+
+	public function storeRedeems() {
+		return $this->hasManyThrough('StoreRedeem', 'Store');
+	}
+
 
 }

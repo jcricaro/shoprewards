@@ -15,5 +15,9 @@ class Store extends Eloquent {
 
 	public function user() {
 		return $this->belongsTo('User');
-	}	
+	}
+
+	public function redeems() {
+		return $this->belongsTo('StoreRedeem');
+	}
 }

@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupPointsTable extends Migration {
+class StoreRedeemController extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,9 +11,10 @@ class CreateGroupPointsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('store_points', function($table) {
+		Schema::create('store_redeems', function($table) {
 			$table->increments('id');
 			$table->integer('store_id');
+			$table->integer('user_id');
 			$table->integer('value');
 			$table->timestamps();
 		});
@@ -26,7 +27,7 @@ class CreateGroupPointsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('store_points');
+		Schema::drop('store_redeems');
 	}
 
 }

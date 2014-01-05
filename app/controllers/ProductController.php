@@ -14,7 +14,7 @@ class ProductController extends \BaseController {
 
 		$this->layout->content = View::make('products.home')
 			->with('title', 'Products')
-			->with('data', Product::all());
+			->with('data', User::find(Sentry::getUser()->id)->products);
 	}
 
 	/**
