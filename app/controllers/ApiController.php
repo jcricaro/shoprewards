@@ -82,6 +82,12 @@ class ApiController extends BaseController {
 		$point->action_id = $action->id;
 		$point->value = $action->value;
 		$point->save();
+		//get from store the points
+		$store = new StoreRedeem;
+		$store->store_id = $action->store_id;
+		$store->user_id = Session::get('user_id');
+		$store->value = $action->value;
+		$store->save();
 
 
 		$response = array(

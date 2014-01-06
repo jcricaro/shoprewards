@@ -63,8 +63,20 @@ class Seed extends Seeder {
 		Sentry::findUserById(1)->addGroup(Sentry::findGroupById(3));
 
 		$code = $user->getActivationCode();
-		$user = Sentry::findUserById($user->id);
+		$user = Sentry::findUserById(1);
 		$user->attemptActivation($code);
+
+		$testuser = Sentry::register(array(
+			'id'		=> 2,
+			'email'		=> 'a@a.com',
+			'password'	=> '123'
+			));
+
+		Sentry::findUserById(2)->addGroup(Sentry::findGroupById(3));
+
+		$code = $testuser->getActivationCode();
+		$testuser = Sentry::findUserById(2);
+		$testuser->attemptActivation($code);
 
 		DB::table('beacons')->delete();
 

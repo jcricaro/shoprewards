@@ -13,7 +13,7 @@ class BeaconController extends \BaseController {
 	{
 		$this->layout->content = View::make('beacons.home')
 			->with('title', 'Beacons')
-			->with('data', Beacon::all());
+			->with('data', User::find(Sentry::getUser()->id)->beacons);
 	}
 
 	/**

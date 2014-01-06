@@ -5,6 +5,11 @@
 	</h1>
 </div>
 
+
+<p class="pull-right">
+<a href={{ url('store/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add Store</a>
+</p>
+
 <div class="row">
 	<div class="col-xs-12">
 		<div class="table-header">
