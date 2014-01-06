@@ -31,4 +31,8 @@ class Action extends Ardent {
 	public function points() {
 		return $this->hasMany('Point');
 	}
+
+	public function hits() {
+		return Point::where('action_id', $this->id)->count();
+	}
 }

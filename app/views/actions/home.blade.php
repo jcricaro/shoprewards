@@ -35,7 +35,7 @@
 						<td>{{ $row->title }}</td>
 						<td>{{ $row->actionType->text }}</td>
 						<td>{{ $row->trigger->title }}</td>
-						<td>{{ $row->hits }}</td>
+						<td>{{ $row->hits() }}</td>
 						<td>Active</td>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
