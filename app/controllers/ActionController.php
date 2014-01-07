@@ -42,6 +42,7 @@ class ActionController extends \BaseController {
 		$action->description 		= Input::get('description');
 		$action->trigger_id 		= Input::get('trigger_id');
 		$action->type 				= Input::get('action');
+		$action->value 				= Input::get('value');
 
 
 		if(!$action->save()) {
@@ -65,7 +66,9 @@ class ActionController extends \BaseController {
 	public function edit($id)
 	{
 		$this->layout->content = View::make('actions.edit')
-			->with('title', 'Edit Action');
+			->with('title', 'Edit Action')
+			->with('data', Action::findOrFail($id))
+			->with('stores', User::find(Sentry::getUser()->id)->stores);
 	}
 
 	/**

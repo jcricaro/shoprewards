@@ -52,6 +52,15 @@
 			<div class="space-4"></div>
 
 			<div class="form-group">
+				<label class="col-sm-3 control-label no-padding-right" for="value">Value</label>
+				<div class="col-sm-5">
+					<input type="text" placeholder="Value" id="value" class="col-xs-10 col-sm-5" name="value" value="{{ Input::old('value') }}" />
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+
+			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="trigger_id">Trigger</label>
 				<div class="col-sm-9">
 					<div class="radio">

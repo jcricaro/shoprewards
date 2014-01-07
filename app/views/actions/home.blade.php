@@ -22,6 +22,7 @@
 						<th>Name</th>
 						<th>Action</th>
 						<th>Beacon/Product</th>
+						<th>Value</th>
 						<th>Hits</th>
 						<th class="hidden-480">Active</th>
 						<th></th>
@@ -35,11 +36,12 @@
 						<td>{{ $row->title }}</td>
 						<td>{{ $row->actionType->text }}</td>
 						<td>{{ $row->trigger->title }}</td>
+						<td>{{ $row->value }}</td>
 						<td>{{ $row->hits() }}</td>
 						<td>Active</td>
 						<td>
 							<div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
-								<a class="green" href="#">
+								<a class="green" href="{{ url('action/'.$row->id.'/edit') }}">
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
@@ -93,7 +95,7 @@
 	jQuery(function($) {
 		var oTable1 = $('#table').dataTable({
 			"aoColumns": [
-			null,null,null,null, null, null,
+			null,null,null,null, null, null, null,
 			{
 				"bSortable": false
 			}
