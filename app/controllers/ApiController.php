@@ -18,11 +18,21 @@ class ApiController extends BaseController {
 		exit(Response::json(array('status' => false, 'message' => 'Reward not available'), 200));
 	}
 
+	function notEnoughStorePoints() {
+		exit(Response::json(array('status' => false, 'message' => 'Not enough store points'), 200));	
+	}
+
 	function checkAction($type, $trigger) {
 		$action = Action::where('type', $type)->where('trigger_id', $trigger)->first();
 		if($action)
 			return $action;
 		$this->actionNotFound();
+	}
+
+
+	function checkStore($store_id, $value) {
+		if(!(StoreRedeem::where('store_id', $store_id)->sum('value') <= StorePoint::where('store_id', $store_id)->sum('value')))
+			$this->notEnoughStorePoints();
 	}
 
 	function checkBeacon($uuid, $major, $minor) {
@@ -75,6 +85,7 @@ class ApiController extends BaseController {
 
 		$beacon = $this->checkBeacon($uuid, $major, $minor);
 		$action = $this->checkAction($state, $beacon->id);
+		$this->checkStore($action->store_id, $action->value);
 		
 		//giff point to user ei?
 		$point = new Point;
