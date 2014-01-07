@@ -68,7 +68,7 @@
 
 			<div class="form-group">
 				{{ Form::label('email', 'Email', array('class' => 'col-sm-3 control-label no-padding-right')) }}
-				<div class="col-sm-9 inline-form">
+				<div class="col-sm-9">
 					{{ Form::text('email', Input::old('email'), array('class' => 'input-large', 'placeholder' => 'Email') )}}
 				</div>
 			</div>
@@ -77,16 +77,26 @@
 
 			<div class="form-group">
 				{{ Form::label('password', 'Password', array('class' => 'col-sm-3 control-label no-padding-right')) }}
-				<div class="col-sm-9 inline-form">
+				<div class="col-sm-9">
 					{{ Form::password('password', array('class' => 'input-large', 'placeholder' => 'Password', 'id' => 'password') )}}
 				</div>
 			</div>
 
 			<div class="space-4"></div>
+
 			<div class="form-group">
 				{{ Form::label('repassword', 'Retype Password', array('class' => 'col-sm-3 control-label no-padding-right')) }}
-				<div class="col-sm-9 inline-form">
+				<div class="col-sm-9">
 					{{ Form::password('repassword', array('class' => 'input-large', 'placeholder' => 'Retype Password') )}}
+				</div>
+			</div>
+
+			<div class="space-4"></div>
+
+			<div class="form-group">
+				{{ Form::label('usertype', 'Usertype', array('class' => 'col-sm-3 control-label no-padding-right')) }}
+				<div class="col-sm-9">
+					{{ Form::select('usertype', $usertypes, Input::old('usertype')) }}
 				</div>
 			</div>
 

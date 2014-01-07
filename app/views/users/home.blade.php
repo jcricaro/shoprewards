@@ -5,6 +5,9 @@
 	</h1>
 </div>
 
+<p class="pull-right">
+<a href={{ url('user/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add User</a>
+</p>
 
 <div class="row">
 	<div class="col-xs-12">

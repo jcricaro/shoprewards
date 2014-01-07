@@ -7,7 +7,7 @@
 
 
 <p class="pull-right">
-<a href={{ url('store/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add Store</a>
+	<a href={{ url('store/create'); }} class="btn btn-primary"><i class="icon icon-plus"></i> Add Store</a>
 </p>
 
 <div class="row">

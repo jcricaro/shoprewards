@@ -23,8 +23,15 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
+		$usertypes = array(
+			1 => 'User',
+			2 => 'Store Admin',
+			3 => 'Super Admin'
+			);
+
 		$this->layout->content = View::make('users.add')
-			->with('title', 'Add User');
+			->with('title', 'Add User')
+			->with('usertypes', $usertypes);
 	}
 
 	/**
@@ -45,6 +52,9 @@ class UserController extends \BaseController {
 				'zipcode' => Input::get('zipcode'),
 				'activated' => true
 				));
+
+			$group = Sentry::findGroupById(Input::get('usertype'));
+			$user->addGroup($group);
 
 			return Redirect::to('user')
 				->with('info', 'User has been added');
