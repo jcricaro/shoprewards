@@ -17,7 +17,7 @@
 
 <div class="row">
 	<div class="col-xs-12">
-		<form class="form-horizontal" id="validation-form" role="form" method="post" action="{{ url('action'); }}">
+		<form class="form-horizontal" id="validation-form" role="form">
 
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="store">Store</label>
@@ -173,6 +173,19 @@
 				store_id: {
 					required: true
 				}
+			},
+			submitHandler: function (form) {
+				$.ajax({
+					url: "{{ url('action/'.$data->id) }}",
+					type: 'PUT',
+					data: $("#validation-form").serialize(),
+					dataType: 'json',
+					success: function(data) {
+						if(data.status) {
+							window.location = "{{ url('action') }}";
+						}
+					}
+				});
 			}
 		});
 	});

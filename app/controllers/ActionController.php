@@ -100,7 +100,25 @@ class ActionController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+
+		$action = Action::find($id);
+
+		$action->store_id 			= Input::get('store_id');
+		$action->title 				= Input::get('title');
+		$action->description 		= Input::get('description');
+		$action->trigger_id 		= Input::get('trigger_id');
+		$action->type 				= Input::get('action');
+		$action->value 				= Input::get('value');
+
+
+		if($action->save()) {
+			Session::flash('info', 'Action updated.');
+			return Response::json(array('status' => true));
+		}
+		else {
+			Session::flash('error', $action->errors()->all());
+			return Response::json(array('status' => false));
+		}	
 	}
 
 	/**
@@ -111,7 +129,12 @@ class ActionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		if(Action::find($id)->delete()) {
+			Session::flash('info', 'Action deleted');
+			return Response::json(array('status' => true));
+		}
+		Session::flash('error', 'Problem while deleting action');
+		return Response::json(array('status' => false));
 	}
 
 }

@@ -11,6 +11,8 @@ class Action extends Ardent {
 		'type'			=> 'required'
 		);
 
+	protected $softDelete = true;
+
 	public function actionType() {
 		return $this->belongsTo('ActionType', 'type');
 	}

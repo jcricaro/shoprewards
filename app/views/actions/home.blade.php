@@ -45,7 +45,7 @@
 									<i class="icon-pencil bigger-130"></i>
 								</a>
 
-								<a class="red" href="#">
+								<a class="red delete" href="#" data-id="{{ $row->id }}">
 									<i class="icon-trash bigger-130"></i>
 								</a>
 							</div>
@@ -66,7 +66,7 @@
 										</li>
 
 										<li>
-											<a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+											<a href="#" class="tooltip-error delete" data-rel="tooltip" title="Delete" data-id="{{ $row->id }}">
 												<span class="red">
 													<i class="icon-trash bigger-120"></i>
 												</span>
@@ -90,6 +90,7 @@
 
 {{ HTML::script('assets/js/jquery.dataTables.min.js') }}
 {{ HTML::script('assets/js/jquery.dataTables.bootstrap.js') }}
+{{ HTML::script('assets/js/bootbox.min.js') }}
 
 <script type="text/javascript">
 	jQuery(function($) {
@@ -100,6 +101,25 @@
 				"bSortable": false
 			}
 			]
+		});
+
+		$(".delete").on("click", function() {
+			var self = this;
+			bootbox.confirm("Are you sure?", function(result) {
+				if(result) {
+					$.ajax({
+						url: "{{ url('action') }}" + "/" + $(self).data('id'),
+						type: 'DELETE',
+						success: function(data) {
+							if(data.status) {
+								location.reload();
+							}
+						},
+						dataType: 'json'
+					});
+				}
+			});
+			return false;
 		});
 	});
 </script>

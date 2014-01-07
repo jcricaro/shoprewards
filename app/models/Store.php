@@ -1,6 +1,7 @@
 <?php
 
 class Store extends Eloquent {
+
 	public function rewards() {
 		return $this->hasMany('Reward');
 	}

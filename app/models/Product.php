@@ -3,6 +3,8 @@ use LaravelBook\Ardent\Ardent;
 
 class Product extends Ardent {
 
+	protected $softDelete = true;
+
 	public static $rules = array(
 		'title'		=> 'required',
 		'ean' 		=> 'required',
