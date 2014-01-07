@@ -23,7 +23,8 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		$this->layout->content = View::make('users.add')
+			->with('title', 'Add User');
 	}
 
 	/**
@@ -33,8 +34,43 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
-		return json_encode(array('test' => 'test'));	
+		try {
+			$user = Sentry::createUser(array(
+				'email' => Input::get('email'),
+				'password' => Input::get('password'),
+				'first_name' => Input::get('first_name'),
+				'last_name' => Input::get('last_name'),
+				'gender' => Input::get('gender'),
+				'city' => Input::get('city'),
+				'zipcode' => Input::get('zipcode'),
+				'activated' => true
+				));
+
+			return Redirect::to('user')
+				->with('info', 'User has been added');
+		}
+		catch (Cartalyst\Sentry\Users\PasswordRequiredException $e) {
+		    return Redirect::to('user/create')
+				->withInput()
+				->with('error', array('Password field is required'));
+		}
+		catch (Cartalyst\Sentry\Users\LoginRequiredException $e) {
+		    return Redirect::to('user/create')
+				->withInput()
+				->with('error', array('Email field is required'));
+		}
+		catch (Cartalyst\Sentry\Users\UserExistsException $e) {
+		    return Redirect::to('user/create')
+				->withInput()
+				->with('error', array('User login already exists'));
+		}
+		catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
+		{
+		 	return Redirect::to('user/create')
+				->withInput()
+				->with('error', array('Group was not found'));   
+		}
+		
 	}
 
 	/**
@@ -56,7 +92,9 @@ class UserController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$this->layout->content = View::make('users.edit')
+			->with('title', 'Edit User')
+			->with('data', User::findOrFail($id));
 	}
 
 	/**
@@ -67,7 +105,21 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$user = User::find($id);
+		$user->last_name = Input::get('last_name');
+		$user->first_name = Input::get('first_name');
+		$user->gender = Input::get('gender');
+		$user->city = Input::get('city');
+		$user->zipcode = Input::get('zipcode');
+
+		if($user->save()) {
+			Session::flash('info', 'User updated.');
+			return Response::json(array('status' => true));
+		}
+		else {
+			Session::flash('error', $user->errors()->all());
+			return Response::json(array('status' => false));
+		}
 	}
 
 	/**
