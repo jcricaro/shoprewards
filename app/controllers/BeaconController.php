@@ -65,7 +65,7 @@ class BeaconController extends \BaseController {
 		$this->layout->content = View::make('beacons.edit')
 			->with('title', 'Edit Product')
 			->with('data', Beacon::findOrFail($id))
-			->with('stores', User::findOrFail(Sentry::getUser()->id)->stores());
+			->with('stores', User::findOrFail(Sentry::getUser()->id)->stores);
 	}
 
 	/**
