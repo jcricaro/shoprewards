@@ -11,7 +11,9 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		return json_encode(array('test' => 'test'));
+		$this->layout->content = View::make('users.home')
+			->with('title', 'Users')
+			->with('data', User::where('id', '!=', 1)->get());
 	}
 
 	/**

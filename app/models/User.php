@@ -49,6 +49,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->email;
 	}
 
+	public function getGroup() {
+		$user = Sentry::findUserByID($this->id);
+
+		return $user->getGroups();
+	}
+
 	public function getCurrentPoints() {
 		return Point::where('user_id', $this->id)->sum('value') - Redeem::where('user_id', $this->id)->sum('value');
 	}

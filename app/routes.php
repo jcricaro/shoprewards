@@ -22,6 +22,7 @@ Route::group(array('before' => 'auth'), function() {
 
 	Route::controller('dashboard', 'DashboardController');
 	Route::resource('store', 'StoreController');
+	Route::resource('user', 'UserController');
 	Route::resource('action', 'ActionController');
 	Route::resource('product', 'ProductController');
 	Route::resource('reward', 'RewardController');

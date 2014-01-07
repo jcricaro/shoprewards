@@ -136,7 +136,7 @@
 				</li>
 
 				<li class="@if(Request::is('user') || Request::is('user/*'))active@endif">
-					<a href="{{ url('store') }}">
+					<a href="{{ url('user') }}">
 						<i class="icon-user"></i>
 						<span class="menu-text"> Users </span>
 					</a>
