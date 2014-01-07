@@ -110,6 +110,27 @@ class ApiController extends BaseController {
 		return Response::json($response, 200);
 	}
 
+	public function getProduct($id) {
+		$product = Product::find($id);
+
+		$photo = $product->getPhotos->first();
+
+		$photo ? $image = $photo->getRegular() : $image = NULL;
+
+		$response = array(
+			'title'			=> $product->title,
+			'description'	=> $product->description,
+			'price'			=> $product->price,
+			'image'			=> $image
+			);
+
+		return Response::json($response, 200);
+	}
+
+	public function productImage() {
+
+	}
+
 	public function postProducts() {
 		$action = Input::get('action', null);
 		$ean = Input::get('ean', null);
