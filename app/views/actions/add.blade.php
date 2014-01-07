@@ -22,11 +22,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="store">Store</label>
 				<div class="col-sm-9">
-					<select name="store_id" class="select2 input-medium" value="{{ Input::old('store_id') }}" id="store">
-						<option></option>
-						@foreach($stores as $store)
-						<option value="{{ $store->id }}">{{ $store->title }}</option>
-						@endforeach
+					{{ Form::select('store_id', $stores, Input::old('store_id'), array('class' => 'select2 input-medium', 'id' => 'store')) }}
 					</select>
 				</div>
 			</div>
@@ -151,6 +147,34 @@
 			$.post("{{ url('store/beacons') }}", post, function(data) {
 				$("#beacon").html(data.html);
 			});
+		});
+
+		$("#store").trigger("change");
+		$("#radio_beacon").trigger("change");
+		$("#radio_product").trigger("change");
+
+		$("#validation-form").validate({
+			errorElement: 'div',
+			errorClass: 'help-block',
+			focusInvalid: false,
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#validate-form')).show();
+			},
+			highlight: function (e) {
+				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+			},
+			rules: {
+				title: {
+					required: true
+				},
+				value: {
+					required: true,
+					number: true
+				},
+				store_id: {
+					required: true
+				}
+			}
 		});
 	});
 </script>

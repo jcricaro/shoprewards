@@ -22,12 +22,7 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="store">Store</label>
 				<div class="col-sm-9">
-					<select name="store_id" class="select2 input-medium" value="{{ $data->store_id }}" id="store">
-						<option></option>
-						@foreach($stores as $store)
-						<option value="{{ $store->id }}">{{ $store->title }}</option>
-						@endforeach
-					</select>
+					{{ Form::select('store_id', $stores, $data->store_id, array('class' => 'input-medium select2', 'id' => 'store') )}}
 				</div>
 			</div>
 
@@ -65,7 +60,7 @@
 				<div class="col-sm-9">
 					<div class="radio">
 						<label>
-							<input type="radio" class="ace col-md-2" name="trigger" id="radio_product" value="p">
+							{{ Form::radio('trigger', 'p', $data->actionType->trigger == 'p' ? true : false, array('class' => 'ace', 'id' => 'radio_beacon')) }}
 							<span class="lbl"> Product &nbsp;
 								<select disabled id="product" class="input-medium">
 								</select>
@@ -74,7 +69,7 @@
 					</div>
 					<div class="radio">
 						<label>
-							<input type="radio" class="ace" name="trigger" id="radio_beacon" value="b">
+							{{ Form::radio('trigger', 'b', $data->actionType->trigger == 'b' ? true : false, array('class' => 'ace  col-md-2', 'id' => 'radio_beacon')) }}
 							<span class="lbl"> Beacon &nbsp;&nbsp;
 								<select disabled id="beacon" class="input-medium">
 								</select>
@@ -151,6 +146,34 @@
 			$.post("{{ url('store/beacons') }}", post, function(data) {
 				$("#beacon").html(data.html);
 			});
+		});
+
+		$("#store").trigger("change");
+		$("#radio_beacon").trigger("change");
+		$("#radio_product").trigger("change");
+
+		$("#validation-form").validate({
+			errorElement: 'div',
+			errorClass: 'help-block',
+			focusInvalid: false,
+			invalidHandler: function (event, validator) { //display error alert on form submit   
+				$('.alert-danger', $('#validate-form')).show();
+			},
+			highlight: function (e) {
+				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+			},
+			rules: {
+				title: {
+					required: true
+				},
+				value: {
+					required: true,
+					number: true
+				},
+				store_id: {
+					required: true
+				}
+			}
 		});
 	});
 </script>

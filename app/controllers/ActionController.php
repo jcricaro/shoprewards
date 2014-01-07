@@ -23,9 +23,20 @@ class ActionController extends \BaseController {
 	 */
 	public function create()
 	{
+		$stores = User::find(Sentry::getUser()->id)->stores;
+		if($stores) {
+			foreach($stores as $store) {
+				$select[$store->id] = $store->title;
+			}	
+		}
+		else {
+			$select = null;
+		}
+		
+
 		$this->layout->content = View::make('actions.add')
 			->with('title', 'Add Action')
-			->with('stores', User::find(Sentry::getUser()->id)->stores);
+			->with('stores', $select);
 	}
 
 	/**
@@ -65,10 +76,20 @@ class ActionController extends \BaseController {
 	 */
 	public function edit($id)
 	{
+		$stores = User::find(Sentry::getUser()->id)->stores;
+		if($stores) {
+			foreach($stores as $store) {
+				$select[$store->id] = $store->title;
+			}	
+		}
+		else {
+			$select = null;
+		}
+
 		$this->layout->content = View::make('actions.edit')
 			->with('title', 'Edit Action')
 			->with('data', Action::findOrFail($id))
-			->with('stores', User::find(Sentry::getUser()->id)->stores);
+			->with('stores', $select);
 	}
 
 	/**
