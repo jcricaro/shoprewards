@@ -110,11 +110,10 @@ class ApiController extends BaseController {
 		return Response::json($response, 200);
 	}
 
-	public function getProduct($id) {
-		$product = Product::find($id);
+	public function getProduct($ean) {
+		$product = $this->checkProduct($ean);
 
 		$photo = $product->getPhotos->first();
-
 		$photo ? $image = $photo->getRegular() : $image = NULL;
 
 		$response = array(
@@ -125,10 +124,6 @@ class ApiController extends BaseController {
 			);
 
 		return Response::json($response, 200);
-	}
-
-	public function productImage() {
-
 	}
 
 	public function postProducts() {
